@@ -1,16 +1,18 @@
 # podcast_demo
 
-A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This is a demo project for jolly podcast.
 
-A few resources to get you started if this is your first Flutter project:
+## how to run
+- clone the repository
+- run flutter pub get
+- run the project
+- note that the project was built on flutter 3.83.5 and dart 3.10.1
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## state management approach
+the project was built using riverpod, taking advantage of its reactive caching capabilities and dependency injection,
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## what could have been better
+the podcast play page, though works but if given more time could have been better
