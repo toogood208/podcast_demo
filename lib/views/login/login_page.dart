@@ -31,7 +31,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   void dispose() {
     passwordController.dispose();
-    passwordController.dispose();
+    phoneController.dispose();
     super.dispose();
   }
 

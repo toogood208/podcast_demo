@@ -6,8 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:podcast_demo/models/podcast_response.dart';
 
-
-
 class PodcastPlayerScreen extends ConsumerStatefulWidget {
   const PodcastPlayerScreen({
     super.key,
@@ -64,7 +62,6 @@ class _PodcastPlayerScreenState extends ConsumerState<PodcastPlayerScreen> {
     final session = await AudioSession.instance;
     await session.configure(AudioSessionConfiguration.music());
 
-    // Load URL
     await _player.setUrl(widget.episode.contentUrl);
 
     _player.durationStream.listen((d) {
@@ -86,10 +83,9 @@ class _PodcastPlayerScreenState extends ConsumerState<PodcastPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -98,21 +94,20 @@ class _PodcastPlayerScreenState extends ConsumerState<PodcastPlayerScreen> {
         ),
         child: Stack(
           children: [
-            // Subtle whitish overlay effect
             Positioned.fill(
               child: CustomPaint(painter: SubtleOverlayPainter()),
             ),
 
-            // Main content
             SafeArea(
               child: Padding(
                 padding: EdgeInsets.all(20.0.w),
                 child: ListView(
-                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Spacer(flex: 2),
+                    SizedBox(height: 40.h),
+
+                    // Episode artwork
                     Container(
-                      width: .infinity,
+                      width: double.infinity,
                       height: 321.h,
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -122,7 +117,10 @@ class _PodcastPlayerScreenState extends ConsumerState<PodcastPlayerScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
+
                     SizedBox(height: 12.h),
+
+                    // Title
                     Text(
                       currentEpisode.title,
                       maxLines: 1,
@@ -130,57 +128,58 @@ class _PodcastPlayerScreenState extends ConsumerState<PodcastPlayerScreen> {
                       style: GoogleFonts.nunito(
                         color: Colors.white,
                         fontSize: 18.sp,
-                        fontWeight: .w800,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
 
                     SizedBox(height: 3.h),
 
+                    // Description
                     Text(
                       currentEpisode.description,
                       style: GoogleFonts.nunito(
                         color: Colors.grey.shade100,
                         fontSize: 15.sp,
-                        fontWeight: .w500,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
 
                     SizedBox(height: 20.h),
+
+                    // Progress bar
                     Container(
                       padding: EdgeInsets.all(3),
-                      width: .infinity,
+                      width: double.infinity,
                       height: 10.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
-                        color: Color.fromRGBO(0, 0, 0, 0.3),
+                        color: const Color.fromRGBO(0, 0, 0, 0.3),
                       ),
                       child: Row(
                         children: [
                           Container(
-                            width:
-                                (_currentPosition.inSeconds /
-                                    (_totalDuration.inSeconds == 0
-                                        ? 1
-                                        : _totalDuration.inSeconds)) *
+                            width: ((_currentPosition.inSeconds) /
+                                (_totalDuration.inSeconds == 0
+                                    ? 1
+                                    : _totalDuration.inSeconds)) *
                                 MediaQuery.of(context).size.width,
-
                             height: 5.h,
                             decoration: BoxDecoration(
-                              color: Colors.red,
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [Color(0xffb9f89c), Color(0xffe7e7e7)],
-                                stops: [0.0, 1.0],
-                                begin: FractionalOffset.centerLeft,
-                                end: FractionalOffset.centerRight,
-                                tileMode: TileMode.repeated,
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
                               ),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ],
                       ),
                     ),
+
                     SizedBox(height: 5.h),
 
+                    // Time row
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: Row(
@@ -205,19 +204,23 @@ class _PodcastPlayerScreenState extends ConsumerState<PodcastPlayerScreen> {
                         ],
                       ),
                     ),
+
                     SizedBox(height: 31.h),
+
+                    // Playback controls
                     Row(
-                      mainAxisAlignment: .center,
-                      spacing: 31.w,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
                           onTap: _playPrevious,
                           child: Image.asset("assets/images/back_button.png"),
                         ),
+                        SizedBox(width: 31.w),
                         GestureDetector(
                           onTap: _skipBackward,
                           child: Image.asset("assets/images/back_ten.png"),
                         ),
+                        SizedBox(width: 31.w),
                         GestureDetector(
                           onTap: () {
                             if (_player.playing) {
@@ -234,17 +237,19 @@ class _PodcastPlayerScreenState extends ConsumerState<PodcastPlayerScreen> {
                             size: 50.r,
                           ),
                         ),
-
+                        SizedBox(width: 31.w),
                         GestureDetector(
                           onTap: _skipForward,
                           child: Image.asset("assets/images/right_ten.png"),
                         ),
+                        SizedBox(width: 31.w),
                         GestureDetector(
                           onTap: _playNext,
                           child: Image.asset("assets/images/right_button.png"),
                         ),
                       ],
                     ),
+
                     SizedBox(height: 62.h),
 
                     // Action buttons
@@ -381,12 +386,9 @@ class SubtleOverlayPainter extends CustomPainter {
       ..color = Colors.white.withValues(alpha: 0.05)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 80);
 
-    // Create subtle circular/radial overlays
     canvas.drawCircle(Offset(size.width * 0.3, size.height * 0.2), 150, paint);
-
     canvas.drawCircle(Offset(size.width * 0.7, size.height * 0.6), 200, paint);
 
-    // Add another layer with even more subtle opacity
     final paint2 = Paint()
       ..color = Colors.white.withValues(alpha: 0.03)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 120);
