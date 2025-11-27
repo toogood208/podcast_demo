@@ -16,3 +16,7 @@ the project was built using riverpod, taking advantage of its reactive caching c
 
 ## what could have been better
 the podcast play page, though works but if given more time could have been better
+
+## apk link
+[link](https://drive.google.com/drive/folders/1z-JlMIYOOt8sDtey8zgaAjcNNEz17W-W?usp=drive_link)
+
